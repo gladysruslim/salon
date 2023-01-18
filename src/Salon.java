@@ -75,13 +75,12 @@ class Customer
         System.out.println("Phone: " + phone);
         System.out.println("belajarrr");
         System.out.println("test");
+        System.out.println("barengann");
 
     }
 
 
-
 }
-
 
 //class transactions {
 //    public void doTransactions()
