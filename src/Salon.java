@@ -81,5 +81,6 @@ class Customer
         {
             point+=10;
         }
+        System.out.println("testt");
     }
 }
