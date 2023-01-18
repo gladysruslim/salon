@@ -73,17 +73,27 @@ class Customer
         System.out.println("Id: " + id);
         System.out.println("Name: " + name);
         System.out.println("Phone: " + phone);
+        System.out.println("belajarrr");
 
     }
-    public void doTransactions()
-    {
-        if(TotalTreatment == 1)
-        {
-            point+=10;
-        }
-        System.out.println("testt");
-        System.out.println("halo");
-        System.out.println("iniiii");
 
-    }
+
+
 }
+
+//class transactions {
+//    public void doTransactions()
+//    {
+//        int TotalTreatment;
+//        Customer customer1 = new Customer();
+//
+//        if(TotalTreatment == 1)
+//        {
+//            customer1.setPoint()+=10;
+//        }
+//        System.out.println("testt");
+//        System.out.println("halo");
+//        System.out.println("iniiii");
+//
+//    }
+//}
