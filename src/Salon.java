@@ -79,6 +79,8 @@ class Customer
         System.out.println("aaaaa");
         System.out.println("bbbbbbb");
 
+        System.out.println("testststst");
+        System.out.println("wkwk");
     }
 
 
