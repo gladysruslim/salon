@@ -74,6 +74,45 @@ public class Customer {
         this.point=point;
     }
 
+    public static void menuCustomer()
+    {
+        int choose;
+
+        do{
+            System.out.println("Chill Salon");
+            System.out.println("Customer Menu:");
+            System.out.println("-----------------");
+            System.out.println("1. Add New Customer");
+            System.out.println("2. View Customer's Data");
+            System.out.println("3. Update Customer Data");
+            System.out.println("4. Remove Customer Data");
+            System.out.println("5. Back to main menu");
+            System.out.print("Choose : ");
+            choose = input.nextInt();
+            input.nextLine();
+            switch (choose) {
+                case 1:
+                    add();
+                    break;
+
+                case 2:
+                    view();
+                    break;
+
+                case 3:
+                    update();
+                    break;
+
+                case 4:
+                    remove();
+                    break;
+
+                case 5:
+                    return;
+            }
+        }while(choose!= 5);
+    }
+
     public static void add()
     {
         String id, name, address, phone;
@@ -122,6 +161,7 @@ public class Customer {
         } else {
             System.out.printf("Input which data to update[1 - %d]: ",(customers.size()));
             int up = input.nextInt();
+            input.nextLine();
             String name, address, phone;
 
             do {
