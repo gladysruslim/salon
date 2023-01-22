@@ -74,6 +74,12 @@ public class Customer {
         this.point=point;
     }
 
+    static void cls() {
+        for (int i = 0; i < 25; i++) {
+            System.out.println();
+        }
+    }
+
     public static void menuCustomer()
     {
         int choose;
@@ -96,7 +102,7 @@ public class Customer {
                     break;
 
                 case 2:
-                    view();
+                    viewCust();
                     break;
 
                 case 3:
@@ -115,6 +121,13 @@ public class Customer {
 
     public static void add()
     {
+        if(customers.size() == 0)
+        {
+            customers.add(new Customer("0001", "Gladys Ruslim", "Menaggio barat 3", "081374512696"));
+            customers.add(new Customer("0002", "Athalia Yechiel", "Banjar no 1", "087884616651"));
+            customers.add(new Customer("0003", "Marvel Jonathan", "Bekasi raya", "081372595054"));
+            customers.add(new Customer("0004", "Delvin Setiamin", "Poris Indah", "08126607314"));
+        }
         String id, name, address, phone;
         id = " " + (int) (Math.random() * 4000);
         do {
@@ -137,8 +150,16 @@ public class Customer {
         customers.add(new Customer(id, name, address, phone));
     }
 
-    public static void view()
+    public static void viewCust()
     {
+        if(customers.size() == 0)
+        {
+            customers.add(new Customer("0001", "Gladys Ruslim", "Padang", "081374512696"));
+            customers.add(new Customer("0002", "Athalia Yechiel", "Banjar no 1", "087884616651"));
+            customers.add(new Customer("0003", "Marvel Jonathan", "Bekasi raya", "081372595054"));
+            customers.add(new Customer("0004", "Delvin Setiamin", "Poris Indah", "08126607314"));
+        }
+
         System.out.println("Jumlah customer: " + customers.size());
         if (customers.isEmpty()) {
             System.out.println("No data!");
@@ -159,6 +180,7 @@ public class Customer {
         if (customers.isEmpty()) {
             System.out.println("No data!");
         } else {
+            viewCust();
             System.out.printf("Input which data to update[1 - %d]: ",(customers.size()));
             int up = input.nextInt();
             input.nextLine();

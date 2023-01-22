@@ -11,6 +11,7 @@ public class Treatment {
     private String name;
     private String type;
     private int price;
+    private int duration;
 
     public String getName() {
         return name;
@@ -36,10 +37,19 @@ public class Treatment {
         this.price = price;
     }
 
-    public Treatment(String name, String type, int price)
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public Treatment(String name, String type, int duration, int price)
     {
        this.setName(name);
        this.setType(type);
+       this.setDuration(duration);
        this.setPrice(price);
     }
 
@@ -65,7 +75,7 @@ public class Treatment {
                     break;
 
                 case 2:
-                    view();
+                    viewTreatment();
                     break;
 
                 case 3:
@@ -85,24 +95,24 @@ public class Treatment {
     public static void add()
     {
         String name, type;
-        int price;
+        int price, duration;
 
         if(treatments.size()==0)
         {
-            treatments.add(new Treatment("Hair cut", "Haircuts & other", 125000));
-            treatments.add(new Treatment("Hair cut poni", "Haircuts & other", 50000));
-            treatments.add(new Treatment("Wash and Blow", "Haircuts & other", 85000));
-            treatments.add(new Treatment("Hairdo", "Haircuts & other", 150000));
-            treatments.add(new Treatment("Eyebrow's Threading", "Haircuts & other", 55000));
-            treatments.add(new Treatment("Medicure", "Nails", 45000));
-            treatments.add(new Treatment("Pedicure", "Nails", 55000));
-            treatments.add(new Treatment("Nail art", "Nails", 100000));
-            treatments.add(new Treatment("Reflexy/foot massage", "Nails", 70000));
-            treatments.add(new Treatment("Hair mask", "Hair Treatment", 150000));
-            treatments.add(new Treatment("Creambath", "Hair Treatment", 130000));
-            treatments.add(new Treatment("Hair spa", "Hair Treatment", 180000));
-            treatments.add(new Treatment("Smoothing", "Hair Treatment", 800000));
-            treatments.add(new Treatment("Coloring", "Hair Treatment", 900000));
+            treatments.add(new Treatment("Hair cut", "Haircuts & other", 60, 125000));
+            treatments.add(new Treatment("Hair cut poni", "Haircuts & other", 30,50000));
+            treatments.add(new Treatment("Wash and Blow", "Haircuts & other", 60, 85000));
+            treatments.add(new Treatment("Hairdo", "Haircuts & other", 120,150000));
+            treatments.add(new Treatment("Eyebrow's Threading", "Haircuts & other", 60,55000));
+            treatments.add(new Treatment("Medicure", "Nails", 60,45000));
+            treatments.add(new Treatment("Pedicure", "Nails", 60,55000));
+            treatments.add(new Treatment("Nail art", "Nails", 120,100000));
+            treatments.add(new Treatment("Reflexy/foot massage", "Nails", 60,70000));
+            treatments.add(new Treatment("Hair mask", "Hair Treatment", 120,150000));
+            treatments.add(new Treatment("Creambath", "Hair Treatment", 120,130000));
+            treatments.add(new Treatment("Hair spa", "Hair Treatment", 120,180000));
+            treatments.add(new Treatment("Smoothing", "Hair Treatment", 180,800000));
+            treatments.add(new Treatment("Coloring", "Hair Treatment", 180,900000));
         }
 
         System.out.printf("Add new treatment? [ Yes | No ]: ");
@@ -122,11 +132,16 @@ public class Treatment {
             }while(type.length() > 50);
 
             do{
+                System.out.printf("Input new treatment's duration: ");
+                duration= input.nextInt();
+            }while(duration<0 || duration > 600);
+
+            do{
                 System.out.printf("Input new treatment's price: ");
                 price= input.nextInt();
             }while(price<0);
 
-            treatments.add(new Treatment(name, type, price));
+            treatments.add(new Treatment(name, type, duration, price));
             sort();
         }
         else{
@@ -134,25 +149,26 @@ public class Treatment {
         }
     }
 
-    public static void view()
+    public static void viewTreatment()
     {
         if(treatments.size()==0)
         {
-            treatments.add(new Treatment("Hair cut", "Haircuts & other", 125000));
-            treatments.add(new Treatment("Hair cut poni", "Haircuts & other", 50000));
-            treatments.add(new Treatment("Wash and Blow", "Haircuts & other", 85000));
-            treatments.add(new Treatment("Hairdo", "Haircuts & other", 150000));
-            treatments.add(new Treatment("Eyebrow's Threading", "Haircuts & other", 55000));
-            treatments.add(new Treatment("Medicure", "Nails", 45000));
-            treatments.add(new Treatment("Pedicure", "Nails", 55000));
-            treatments.add(new Treatment("Nail art", "Nails", 100000));
-            treatments.add(new Treatment("Reflexy/foot massage", "Nails", 70000));
-            treatments.add(new Treatment("Hair mask", "Hair Treatment", 150000));
-            treatments.add(new Treatment("Creambath", "Hair Treatment", 130000));
-            treatments.add(new Treatment("Hair spa", "Hair Treatment", 180000));
-            treatments.add(new Treatment("Smoothing", "Hair Treatment", 800000));
-            treatments.add(new Treatment("Coloring", "Hair Treatment", 900000));
+            treatments.add(new Treatment("Hair cut", "Haircuts & other", 60, 125000));
+            treatments.add(new Treatment("Hair cut poni", "Haircuts & other", 30,50000));
+            treatments.add(new Treatment("Wash and Blow", "Haircuts & other", 60, 85000));
+            treatments.add(new Treatment("Hairdo", "Haircuts & other", 120,150000));
+            treatments.add(new Treatment("Eyebrow's Threading", "Haircuts & other", 60,55000));
+            treatments.add(new Treatment("Medicure", "Nails", 60,45000));
+            treatments.add(new Treatment("Pedicure", "Nails", 60,55000));
+            treatments.add(new Treatment("Nail art", "Nails", 120,100000));
+            treatments.add(new Treatment("Reflexy/foot massage", "Nails", 60,70000));
+            treatments.add(new Treatment("Hair mask", "Hair Treatment", 120,150000));
+            treatments.add(new Treatment("Creambath", "Hair Treatment", 120,130000));
+            treatments.add(new Treatment("Hair spa", "Hair Treatment", 120,180000));
+            treatments.add(new Treatment("Smoothing", "Hair Treatment", 180,800000));
+            treatments.add(new Treatment("Coloring", "Hair Treatment", 180,900000));
         }
+
         System.out.println("Chill Salon");
         System.out.println("Treatment and Price List");
         System.out.println("==============================================");
@@ -160,7 +176,7 @@ public class Treatment {
 
         for(int i=0; i < treatments.size(); i++)
         {
-            System.out.printf("| %s | %s | Rp. %d |", treatments.get(i).getName(), treatments.get(i).getType(), treatments.get(i).getPrice());
+            System.out.printf("| %d. | %s | %s | %d menit | Rp. %d |", (i+1), treatments.get(i).getName(), treatments.get(i).getType(), treatments.get(i).getDuration(), treatments.get(i).getPrice());
             System.out.println(" ");
         }
 
@@ -184,8 +200,8 @@ public class Treatment {
     public static void update()
     {
         String name, type;
-        int price;
-        view();
+        int price, duration;
+        viewTreatment();
         System.out.printf("Input which treatment to update[1 - %d]: ",(treatments.size()));
         int up = input.nextInt();
         input.nextLine();
@@ -203,6 +219,11 @@ public class Treatment {
         }while(type.length() > 50);
 
         do{
+            System.out.printf("Input new treatment's duration: ");
+            duration= input.nextInt();
+        }while(duration<0 || duration > 600);
+
+        do{
             System.out.printf("Input new treatment's price: ");
             price= input.nextInt();
             treatments.get(up-1).setPrice(price);
@@ -213,7 +234,7 @@ public class Treatment {
 
     public static void remove()
     {
-        view();
+        viewTreatment();
         System.out.printf("Input which treatments to remove[1 - %d]: ",(treatments.size()));
         int del = input.nextInt();
         System.out.printf("Are you sure to remove the treatment? [Yes | No]: ");

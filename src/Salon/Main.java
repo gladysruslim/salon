@@ -1,18 +1,24 @@
 package Salon;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import static Salon.Appointment.menuAppointment;
 import static Salon.Customer.*;
+import static Salon.Transactions.menuTransactions;
 import static Salon.Treatment.menuTreatment;
 
 public class Main {
     static Scanner input = new Scanner(System.in);
+    static ArrayList<Customer> customers = new ArrayList<>();
+    static ArrayList<Appointment> appointments = new ArrayList<>();
 
     public static void main(String[] args) {
         int choose;
 
         do{
             System.out.println("Chill Salon");
+            System.out.println("Open from 9.00 until 19.00");
             System.out.println("-----------------");
             System.out.println("Category:");
             System.out.println("1. Customer Data");
@@ -39,11 +45,11 @@ public class Main {
                     break;
 
                 case 4:
-                   // menuAppointment();
+                    menuAppointment();
                     break;
 
                 case 5:
-                    // menuTransactions();
+                    menuTransactions();
                     break;
 
                 case 6:
