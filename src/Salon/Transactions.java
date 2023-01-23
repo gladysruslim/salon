@@ -172,11 +172,9 @@ public class Transactions {
             }while(jumlahtr<=0 || jumlahtr>6);
 
             for (int i = 0; i < customers.size(); i++) {
-                for (int j = 0; j < done.size(); j++) {
-                    if(customers.get(i).getName().equals(done.get(j).getCust()))
-                    {
-                        noCust=i;
-                    }
+                if(customers.get(i).getName().equals(done.get(choose-1).getCust()))
+                {
+                    noCust=i;
                 }
             }
 
