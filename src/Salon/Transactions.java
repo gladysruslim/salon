@@ -3,10 +3,11 @@ package Salon;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 import static Salon.Appointment.appointments;
-import static Salon.Customer.customers;
+import static Salon.Customer.*;
 import static Salon.Main.header;
 import static Salon.Treatment.treatments;
 import static Salon.Appointment.done;
@@ -19,12 +20,12 @@ public class Transactions {
 
     private int time;
     private String cust;
-    public String[] trm = new String[5];
-    private int[] price = new int[5];
+    public String[] trm = new String[6];
+    private int[] price = new int[6];
     private int total;
     static int jumlahtr;
-    static String[] tr = new String[5];
-    static int[] harga = new int[5];
+    static String[] tr = new String[6];
+    static int[] harga = new int[6];
 
     public int getTime() {
         return time;
@@ -157,6 +158,7 @@ public class Transactions {
             System.out.println("Please input the customer that has done the treatment in appointment menu first");
         }
         else {
+            int noCust = 0;
             do{
                 viewDone();
                 System.out.printf("Choose the customer to make transactions: ");
@@ -165,9 +167,29 @@ public class Transactions {
 
 
             do{
-                System.out.printf("Total treatment [max 5] : ");
+                System.out.printf("Total treatment [max 6] : ");
                 jumlahtr = input.nextInt();
-            }while(jumlahtr<=0 || jumlahtr>5);
+            }while(jumlahtr<=0 || jumlahtr>6);
+
+            for (int i = 0; i < customers.size(); i++) {
+                for (int j = 0; j < done.size(); j++) {
+                    if(customers.get(i).getName().equals(done.get(j).getCust()))
+                    {
+                        noCust=i;
+                    }
+                }
+            }
+
+            customers.get(noCust).point += custPoint();
+            if(customers.get(noCust).point > 100)
+            {
+                customers.get(noCust).setStatus("Gold");
+            }
+            else if(customers.get(noCust).point >500)
+            {
+                customers.get(noCust).setStatus("Platinum");
+            }
+
             viewTreatment();
 
             for (int i=0; i<jumlahtr; i++)
@@ -195,6 +217,8 @@ public class Transactions {
                 }
             }while(!status.equals("LUNAS"));
 
+            done.remove(choose-1);
+
             System.out.println("Transaksi Selesai!");
             System.out.println("Press enter to continue...");
             input.nextLine();
@@ -205,19 +229,17 @@ public class Transactions {
     public static void viewBill()
     {
         System.out.println();
-        for (int i = 0; i < transactions.size(); i++) {
-            System.out.println("No. " + (i+1));
-            System.out.println("Nama: " + transactions.get(i).getCust());
-            System.out.printf("Waktu: %d.00 WIB" , transactions.get(i).getTime());
-            System.out.println();
-            for (int j = 0; j < jumlahtr ; j++) {
+        System.out.println("Nama: " + transactions.get(transactions.size()-1).getCust());
+        System.out.printf("Waktu: %d.00 WIB" , transactions.get(transactions.size()-1).getTime());
+        System.out.println();
+        for (int j = 0; j < jumlahtr ; j++) {
                 System.out.printf("| %-20s | Rp. %-15d |", tr[j], harga[j]);
                 System.out.println();
             }
-            System.out.println("Total: Rp. " + transactions.get(i).getTotal());
+            System.out.println("Total: Rp. " + transactions.get(transactions.size()-1).getTotal());
             System.out.println();
-        }
     }
+
 
     public static void viewTransactionList()
     {
@@ -272,11 +294,11 @@ public class Transactions {
                 }
                 else{
                     do{
-                        viewDone();
+                        viewCust();
                         System.out.printf("Choose customer: ");
                         cust= input.nextInt();
-                        transactions.get(up-1).setCust(done.get(cust-1).getCust());
-                    }while(cust<0 || cust > done.size());
+                        transactions.get(up-1).setCust(customers.get(cust-1).getName());
+                    }while(cust<0 || cust > customers.size());
 
                     do{
                         System.out.printf("Input new total: ");

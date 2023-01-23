@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import static Salon.Main.header;
+import static Salon.Transactions.jumlahtr;
+import static Salon.Transactions.transactions;
 
 public class Customer {
     static Scanner input = new Scanner(System.in);
@@ -67,13 +69,13 @@ public class Customer {
         this.point = point;
     }
 
-    public Customer(String id, String name, String address, String phone){
+    public Customer(String id, String name, String address, String phone, String status, int point){
         this.setId(id);
         this.setName(name);
         this.address = address;
         this.setPhone(phone);
-        this.status = status;
-        this.point=point;
+        this.setStatus(status);
+        this.setPoint(point);
     }
 
     static void cls() {
@@ -125,12 +127,14 @@ public class Customer {
     {
         if(customers.size() == 0)
         {
-            customers.add(new Customer("0001", "Gladys Ruslim", "Menaggio barat 3", "081374512696"));
-            customers.add(new Customer("0002", "Athalia Yechiel", "Banjar no 1", "087884616651"));
-            customers.add(new Customer("0003", "Marvel Jonathan", "Bekasi raya", "081372595054"));
-            customers.add(new Customer("0004", "Delvin Setiamin", "Poris Indah", "08126607314"));
+            customers.add(new Customer("0001", "Gladys Ruslim", "Menaggio barat 3", "081374512696", "Silver", 0));
+            customers.add(new Customer("0002", "Athalia Yechiel", "Banjar no 1", "087884616651", "Silver", 0));
+            customers.add(new Customer("0003", "Marvel Jonathan", "Bekasi raya", "081372595054", "Silver", 0));
+            customers.add(new Customer("0004", "Delvin Setiamin", "Poris Indah", "08126607314", "Silver", 0));
         }
-        String id, name, address, phone;
+
+        String id, name, address, phone, status;
+        int point = 0;
         id = " " + (int) (Math.random() * 4000);
         do {
             System.out.print("Input Customer's name [5..20] : ");
@@ -147,7 +151,9 @@ public class Customer {
             phone = input.nextLine();
         } while ((phone.length() < 11 || phone.length() > 13));
 
-        customers.add(new Customer(id, name, address, phone));
+        status = "Silver";
+
+        customers.add(new Customer(id, name, address, phone, status, point));
 
         System.out.println("New customer added!");
         System.out.printf("Press enter to continue...");
@@ -158,10 +164,10 @@ public class Customer {
     {
         if(customers.size() == 0)
         {
-            customers.add(new Customer("0001", "Gladys Ruslim", "Padang", "081374512696"));
-            customers.add(new Customer("0002", "Athalia Yechiel", "Banjar no 1", "087884616651"));
-            customers.add(new Customer("0003", "Marvel Jonathan", "Bekasi raya", "081372595054"));
-            customers.add(new Customer("0004", "Delvin Setiamin", "Poris Indah", "08126607314"));
+            customers.add(new Customer("0001", "Gladys Ruslim", "Menaggio barat 3", "081374512696", "Silver", 0));
+            customers.add(new Customer("0002", "Athalia Yechiel", "Banjar no 1", "087884616651", "Silver", 0));
+            customers.add(new Customer("0003", "Marvel Jonathan", "Bekasi raya", "081372595054", "Silver", 0));
+            customers.add(new Customer("0004", "Delvin Setiamin", "Poris Indah", "08126607314", "Silver", 0));
         }
 
         if (customers.isEmpty()) {
@@ -171,16 +177,15 @@ public class Customer {
         } else {
             header();
             System.out.println("Jumlah customer: " + customers.size());
-            System.out.println("==================================================");
+            System.out.println("================================================================================================================");
+            System.out.printf("| %s | %-5s | %-25s | %-25s | %-14s | %-10s | %-5s |", "No.", "ID", "Nama Customer", "Alamat", "Telepon", "Status Member", "Point");
+            System.out.println();
+            System.out.println("===============================================================================================================");
             for (int i = 0; i < customers.size(); i++) {
-                System.out.println("No. " + (i+1));
-                System.out.println("ID: " + customers.get(i).getId());
-                System.out.println("Nama: " + customers.get(i).getName());
-                System.out.println("Alamat: " + customers.get(i).getAddress());
-                System.out.println("Phone: " + customers.get(i).getPhone());
+                System.out.printf("| %-2d. | %-5s | %-25s | %-25s | %-14s | %-13s | %-5d |", (i+1), customers.get(i).getId(), customers.get(i).getName(), customers.get(i).getAddress(), customers.get(i).getPhone(), customers.get(i).getStatus(), customers.get(i).getPoint());
                 System.out.println();
             }
-            System.out.println("==================================================");
+            System.out.println("================================================================================================================");
             System.out.printf("Press enter to continue...");
             input.nextLine();
         }
@@ -235,10 +240,20 @@ public class Customer {
             System.out.println("The customer data removed");
             System.out.printf("Press enter to continue...");
             input.nextLine();
-
         }
     }
 
+    public static int custPoint()
+    {
+        int point = 0;
 
-
+        if(jumlahtr < 3)
+        {
+            point+=10;
+        }
+        else{
+            point+=20;
+        }
+        return point;
+    }
 }

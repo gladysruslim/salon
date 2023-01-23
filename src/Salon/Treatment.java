@@ -9,7 +9,6 @@ import static Salon.Main.header;
 public class Treatment {
     static Scanner input = new Scanner(System.in);
     static ArrayList<Treatment> treatments = new ArrayList<>();
-
     private String name;
     private String type;
     private int price;
@@ -270,9 +269,4 @@ public class Treatment {
             return;
         }
     }
-
-
-
 }
-
-
