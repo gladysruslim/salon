@@ -1,11 +1,13 @@
 package Salon;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 import static Salon.Appointment.appointments;
 import static Salon.Customer.customers;
+import static Salon.Main.header;
 import static Salon.Treatment.treatments;
 import static Salon.Appointment.done;
 import static Salon.Treatment.viewTreatment;
@@ -78,105 +80,261 @@ public class Transactions {
         int choose;
 
         do{
-            System.out.println("Chill Salon");
+            header();
             System.out.println("Transactions Menu:");
             System.out.println("-----------------");
-            System.out.println("1. Add Transactions");
-            System.out.println("2. View Transactions");
-            System.out.println("3. Update Transactions");
-            System.out.println("4. Remove Transactions");
-            System.out.println("5. Back to main menu");
+            System.out.println("1. Waiting for payment list");
+            System.out.println("2. Payment Transactions [Automatic add to transactions list]");
+            System.out.println("3. View Transactions List");
+            System.out.println("4. Update Transactions [FOR OWNER]");
+            System.out.println("5. Remove Transactions [FOR OWNER]");
+            System.out.println("6. Back to main menu");
             System.out.print("Choose : ");
             choose = input.nextInt();
             input.nextLine();
             switch (choose) {
                 case 1:
-                    addTransactions();
+                    viewDone();
                     break;
 
                 case 2:
-                    viewTransactions();
+                    payment();
                     break;
 
                 case 3:
-                    //update();
+                    viewTransactionList();
                     break;
 
                 case 4:
-                    //remove();
+                    updateTransactions();
                     break;
 
                 case 5:
-                    return;
+                    removeTransactions();
+                    break;
 
                 case 6:
-                    viewDone();
-                    break;
+                    return;
             }
-        }while(choose!= 5);
+        }while(choose!= 6);
     }
     public static void viewDone()
     {
-        int choose;
-        System.out.println("Chill Salon");
-        System.out.println("Waiting for payment List");
-        System.out.println("Jumlah: " + done.size());
-        System.out.println("==================================================================");
-        for (int i=0; i< done.size(); i++)
+        if(done.isEmpty())
         {
-            System.out.printf(" | %-2d. | %-20s |", (i+1), done.get(i).getCust());
-            System.out.println("");
+            System.out.println("There is 0 customer done");
+            System.out.println("Press enter to continue...");
+            input.nextLine();
         }
-        System.out.println("==================================================================");
+        else{
+            int choose;
+            header();
+            System.out.println("Waiting for payment List");
+            System.out.println("Jumlah: " + done.size());
+            System.out.println("==============================");
+            for (int i=0; i< done.size(); i++)
+            {
+                System.out.printf("| %-2d. | %-20s |", (i+1), done.get(i).getCust());
+                System.out.println("");
+            }
+            System.out.println("==============================");
+            System.out.printf("Press enter to continue...");
+            input.nextLine();
+        }
     }
 
-    public static void addTransactions()
+    public static void payment()
     {
         int choose;
         int pilihtr;
+        String status;
 
         int total = 0;
 
-        do{
-            viewDone();
-            System.out.printf("Choose the customer to make transactions: ");
-            choose= input.nextInt();
-        }while(choose<0 || choose>done.size());
-
-
-        do{
-            System.out.printf("Total treatment [max 5] : ");
-            jumlahtr = input.nextInt();
-        }while(jumlahtr<=0 || jumlahtr>5);
-        viewTreatment();
-
-        for (int i=0; i<jumlahtr; i++)
+        if(done.isEmpty())
         {
-            System.out.println("Choose the customer's treatment: ");
+            System.out.println("There is no customer data to payment!");
+            System.out.println("Please input the customer that has done the treatment in appointment menu first");
+        }
+        else {
             do{
-                pilihtr = input.nextInt();
-            }while(pilihtr<0 || pilihtr>treatments.size());
-            tr[i]=treatments.get(pilihtr-1).getName();
-            harga[i]= treatments.get(pilihtr-1).getPrice();
-            total+=harga[i];
+                viewDone();
+                System.out.printf("Choose the customer to make transactions: ");
+                choose= input.nextInt();
+            }while(choose<0 || choose>done.size());
+
+
+            do{
+                System.out.printf("Total treatment [max 5] : ");
+                jumlahtr = input.nextInt();
+            }while(jumlahtr<=0 || jumlahtr>5);
+            viewTreatment();
+
+            for (int i=0; i<jumlahtr; i++)
+            {
+                System.out.printf("Choose the customer's treatment: ");
+                do{
+                    pilihtr = input.nextInt();
+                }while(pilihtr<0 || pilihtr>treatments.size());
+                tr[i]=treatments.get(pilihtr-1).getName();
+                harga[i]= treatments.get(pilihtr-1).getPrice();
+                total+=harga[i];
+            }
+
+            input.nextLine();
+
+            transactions.add(new Transactions(done.get(choose-1).getTime(), done.get(choose-1).getCust(), tr, harga, total));
+
+            viewBill();
+            do{
+                System.out.printf("Input payment Status [LUNAS] : ");
+                status = input.nextLine();
+                if(!status.equals("LUNAS"))
+                {
+                    System.out.println("Tidak menerima kredit!");
+                }
+            }while(!status.equals("LUNAS"));
+
+            System.out.println("Transaksi Selesai!");
+            System.out.println("Press enter to continue...");
+            input.nextLine();
         }
 
-        transactions.add(new Transactions(done.get(choose-1).getTime(), done.get(choose-1).getCust(), tr, harga, total));
     }
 
-    public static void viewTransactions()
+    public static void viewBill()
     {
+        System.out.println();
         for (int i = 0; i < transactions.size(); i++) {
             System.out.println("No. " + (i+1));
             System.out.println("Nama: " + transactions.get(i).getCust());
-            System.out.printf("Waktu: %d .00" , transactions.get(i).getTime());
+            System.out.printf("Waktu: %d.00 WIB" , transactions.get(i).getTime());
             System.out.println();
             for (int j = 0; j < jumlahtr ; j++) {
-                System.out.printf("| %s | Rp. %d |", tr[j], harga[j]);
+                System.out.printf("| %-20s | Rp. %-15d |", tr[j], harga[j]);
                 System.out.println();
             }
             System.out.println("Total: Rp. " + transactions.get(i).getTotal());
             System.out.println();
         }
     }
+
+    public static void viewTransactionList()
+    {
+        if(transactions.isEmpty())
+        {
+            System.out.println("There is no transactions");
+            System.out.printf("Press enter to continue...");
+            input.nextLine();
+        }
+        else {
+            header();
+            System.out.println("Transactions List");
+            System.out.println("Jumlah transactions: " + transactions.size());
+            System.out.println("=============================================");
+            System.out.printf("| %-3s | %-20s | %-12s |", "No", "Customer Name", "Total Income");
+            System.out.println();
+            for (int i=0; i< transactions.size(); i++)
+            {
+                System.out.printf("| %-2d. | %-20s | Rp. %-8s |", (i+1), transactions.get(i).getCust(),transactions.get(i).getTotal());
+                System.out.println("");
+            }
+            System.out.println("=============================================");
+            System.out.printf("Press enter to continue...");
+            input.nextLine();
+        }
+    }
+
+    public static void updateTransactions()
+    {
+        String password;
+        int cust;
+        int totalBaru;
+        if(transactions.isEmpty())
+        {
+            System.out.println("There is no transactions");
+        }
+        else
+        {
+            System.out.println("Transactions list only can be update or remove by owner");
+            System.out.printf("If you are owner, input password: ");
+            password=input.nextLine();
+            if(password.equals("Saya Owner"))
+            {
+                viewTransactionList();
+                System.out.printf("Input which transactions to update[1 - %d | input 0 to return]: ",(transactions.size()));
+                int up = input.nextInt();
+                input.nextLine();
+
+                if(up==0)
+                {
+                    return;
+                }
+                else{
+                    do{
+                        viewDone();
+                        System.out.printf("Choose customer: ");
+                        cust= input.nextInt();
+                        transactions.get(up-1).setCust(done.get(cust-1).getCust());
+                    }while(cust<0 || cust > done.size());
+
+                    do{
+                        System.out.printf("Input new total: ");
+                        totalBaru= input.nextInt();
+                        transactions.get(up-1).setTotal(totalBaru);
+                    }while(totalBaru < 0);
+
+                    System.out.println("The transactions list updated!");
+                    System.out.printf("Press enter to continue...");
+                    input.nextLine();
+                }
+            }
+            else {
+                System.out.println("You are not owner!");
+                System.out.printf("Press enter to continue...");
+                input.nextLine();
+            }
+        }
+    }
+
+    public static void removeTransactions()
+    {
+        String password;
+
+        if(transactions.isEmpty())
+        {
+            System.out.println("There is no transactions");
+        }
+        else
+        {
+            System.out.println("Transactions list only can be update or remove by owner");
+            System.out.printf("If you are owner, input password: ");
+            password=input.nextLine();
+            if(password.equals("Saya Owner"))
+            {
+                viewTransactionList();
+                System.out.printf("Input which transactions to remove[1 - %d | input 0 to return]: ",(transactions.size()));
+                int del = input.nextInt();
+                input.nextLine();
+
+                if(del==0)
+                {
+                    return;
+                }
+                else{
+                    transactions.remove(del - 1);
+                    System.out.println("The transactions removed!");
+                    System.out.println("Press enter to continue...");
+                    input.nextLine();
+                }
+            }
+            else{
+                System.out.println("You are not owner!");
+                System.out.printf("Press enter to continue...");
+                input.nextLine();
+            }
+        }
+
+    }
+
 }

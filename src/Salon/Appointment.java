@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import static Salon.Customer.viewCust;
 import static Salon.Customer.customers;
+import static Salon.Main.header;
 import static Salon.Treatment.treatments;
 import static Salon.Treatment.viewTreatment;
 
@@ -85,21 +86,21 @@ public class Appointment {
         int choose;
 
         do{
-            System.out.println("Chill Salon");
+            header();
             System.out.println("Call 02126052004 to make appointment");
             System.out.println("Appointment Menu:");
             System.out.println("-----------------");
             System.out.println("1. Add Appointment");
             System.out.println("2. View Appointment List");
             System.out.println("3. Update Appointment List");
-            System.out.println("4. Remove Appointment");
+            System.out.println("4. Move appointment to done list");
             System.out.println("5. Back to main menu");
             System.out.print("Choose : ");
             choose = input.nextInt();
             input.nextLine();
             switch (choose) {
                 case 1:
-                    add();
+                    addAppointment();
                     break;
 
                 case 2:
@@ -107,11 +108,11 @@ public class Appointment {
                     break;
 
                 case 3:
-                    update();
+                    updateAppointment();
                     break;
 
                 case 4:
-                    remove();
+                    removeAppointment();
                     break;
 
                 case 5:
@@ -120,7 +121,7 @@ public class Appointment {
         }while(choose!= 5);
     }
 
-    public static void add()
+    public static void addAppointment()
     {
         int choose;
         int time;
@@ -144,7 +145,7 @@ public class Appointment {
 
                 viewTreatment();
                 do{
-                    System.out.printf("Choose treatment number: ");
+                    System.out.printf("Choose treatment number [customer can ask more treatment on the spot if the staff is available]: ");
                     choose = input.nextInt();
                     //   appointments.get(choose-1).setTreatment(treatments.get(choose-1));
                 }while(choose<0 || choose>treatments.size());
@@ -160,10 +161,16 @@ public class Appointment {
 
 
                 appointments.add(new Appointment(customers.get(cust-1).getName(), treatments.get(choose-1).getName(), time, sum, price, totalPrice));
+                input.nextLine();
+                System.out.println("New appointments added!");
+                System.out.printf("Press enter to continue...");
+                input.nextLine();
             }
             else
             {
                 System.out.println("please add customer first!");
+                System.out.printf("Press enter to continue...");
+                input.nextLine();
                 return;
             }
         }
@@ -173,11 +180,13 @@ public class Appointment {
     {
         if(appointments.isEmpty())
         {
-            System.out.println("No appointemnt!");
+            System.out.println("No appointment!");
+            System.out.printf("Press enter to continue...");
+            input.nextLine();
         }
         else
         {
-            System.out.println("Chill Salon");
+            header();
             System.out.println("Appointment List");
             System.out.println("Jumlah appointment: " + appointments.size());
             System.out.println("==================================================================");
@@ -187,41 +196,70 @@ public class Appointment {
                 System.out.println("");
             }
             System.out.println("==================================================================");
+            System.out.printf("Press enter to continue...");
+            input.nextLine();
         }
     }
 
-    public static void update()
+    public static void updateAppointment()
     {
         int trt, time;
-        viewAppointment();
-        System.out.printf("Input which appointment to update[1 - %d]: ",(appointments.size()));
-        int up = input.nextInt();
-        input.nextLine();
+        if(appointments.isEmpty())
+        {
+            System.out.println("There is no appointment");
+        }
+        else
+        {
+            viewAppointment();
+            System.out.printf("Are you want to update appointment? [Yes | No]: ");
+            String ans = input.next();
+            if(ans.equals("No"))
+            {
+                return;
+            }
+            else {
+                System.out.printf("Input which appointment to update[1 - %d]: ",(appointments.size()));
+                int up = input.nextInt();
+                input.nextLine();
 
-        do{
-            viewTreatment();
-            System.out.printf("Choose new appointment's treatment: ");
-            trt= input.nextInt();
-            appointments.get(up-1).setTrt(treatments.get(trt-1).getName());
-        }while(trt <0 || trt >treatments.size());
+                do{
+                    viewTreatment();
+                    System.out.printf("Choose one appointment's treatment : ");
+                    trt= input.nextInt();
+                    appointments.get(up-1).setTrt(treatments.get(trt-1).getName());
+                }while(trt <0 || trt >treatments.size());
 
-        do{
-            System.out.printf("Input new appointment's time [ 9-19 ] WIB: ");
-            time= input.nextInt();
-            appointments.get(up-1).setTime(time);
-        }while(time < 9 || time > 19);
+                do{
+                    System.out.printf("Input new appointment's time [ 9-19 ] WIB: ");
+                    time= input.nextInt();
+                    appointments.get(up-1).setTime(time);
+                }while(time < 9 || time > 19);
+
+                input.nextLine();
+                System.out.println("The appointment's details updated!");
+                System.out.printf("Press enter to continue...");
+                input.nextLine();
+            }
+        }
+
     }
 
-    public static void remove()
+    public static void removeAppointment()
     {
-        viewAppointment();
-        System.out.printf("Choose which appointment has done[1 - %d]: ",(appointments.size()));
-        int del = input.nextInt();
-        input.nextLine();
-        done.add(appointments.get(del-1));
-        appointments.remove(del - 1);
-        System.out.println("The treatment done, waiting for payment...");
-        System.out.println("Press enter to continue...");
-        input.nextLine();
+        if(appointments.isEmpty())
+        {
+            System.out.println("There is no appointment");
+        }
+        else{
+            viewAppointment();
+            System.out.printf("Choose which appointment has done[1 - %d]: ",(appointments.size()));
+            int del = input.nextInt();
+            input.nextLine();
+            done.add(appointments.get(del-1));
+            appointments.remove(del - 1);
+            System.out.println("The treatment done, waiting for payment...");
+            System.out.println("Press enter to continue...");
+            input.nextLine();
+        }
     }
 }

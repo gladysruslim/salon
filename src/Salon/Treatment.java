@@ -4,6 +4,8 @@ import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static Salon.Main.header;
+
 public class Treatment {
     static Scanner input = new Scanner(System.in);
     static ArrayList<Treatment> treatments = new ArrayList<>();
@@ -58,7 +60,7 @@ public class Treatment {
         int choose;
 
         do{
-            System.out.println("Chill Salon");
+            header();
             System.out.println("Treatment Menu:");
             System.out.println("-----------------");
             System.out.println("1. Add New Treatment");
@@ -71,7 +73,7 @@ public class Treatment {
             input.nextLine();
             switch (choose) {
                 case 1:
-                    add();
+                    addTreatment();
                     break;
 
                 case 2:
@@ -79,11 +81,11 @@ public class Treatment {
                     break;
 
                 case 3:
-                    update();
+                    updateTreatment();
                     break;
 
                 case 4:
-                    remove();
+                    removeTreatment();
                     break;
 
                 case 5:
@@ -92,7 +94,7 @@ public class Treatment {
         }while(choose!= 5);
     }
 
-    public static void add()
+    public static void addTreatment()
     {
         String name, type;
         int price, duration;
@@ -132,17 +134,22 @@ public class Treatment {
             }while(type.length() > 50);
 
             do{
-                System.out.printf("Input new treatment's duration: ");
+                System.out.printf("Input new treatment's duration [in minute]: ");
                 duration= input.nextInt();
             }while(duration<0 || duration > 600);
 
             do{
-                System.out.printf("Input new treatment's price: ");
+                System.out.printf("Input new treatment's price: Rp. ");
                 price= input.nextInt();
             }while(price<0);
 
             treatments.add(new Treatment(name, type, duration, price));
             sort();
+
+            input.nextLine();
+            System.out.println("New Treatment Added!");
+            System.out.printf("Press enter to continue...");
+            input.nextLine();
         }
         else{
             return;
@@ -167,16 +174,19 @@ public class Treatment {
             treatments.add(new Treatment("Hair spa", "Hair Treatment", 120,180000));
             treatments.add(new Treatment("Smoothing", "Hair Treatment", 180,800000));
             treatments.add(new Treatment("Coloring", "Hair Treatment", 180,900000));
+            sort();
         }
 
-        System.out.println("Chill Salon");
+        header();
         System.out.println("Treatment and Price List");
         System.out.println("==============================================");
         System.out.println("Jumlah treatment: " + treatments.size());
 
+        System.out.printf("| %-2s | %-20s | %-20s | %-10s | %-11s |", "No.", "Treatment Name", "Treatment Type", "Duration", "Price");
+        System.out.println();
         for(int i=0; i < treatments.size(); i++)
         {
-            System.out.printf("| %d. | %s | %s | %d menit | Rp. %d |", (i+1), treatments.get(i).getName(), treatments.get(i).getType(), treatments.get(i).getDuration(), treatments.get(i).getPrice());
+            System.out.printf("| %-2d. | %-20s | %-20s | %-4d menit | Rp. %-7d |", (i+1), treatments.get(i).getName(), treatments.get(i).getType(), treatments.get(i).getDuration(), treatments.get(i).getPrice());
             System.out.println(" ");
         }
 
@@ -197,7 +207,7 @@ public class Treatment {
         }
     }
 
-    public static void update()
+    public static void updateTreatment()
     {
         String name, type;
         int price, duration;
@@ -219,33 +229,44 @@ public class Treatment {
         }while(type.length() > 50);
 
         do{
-            System.out.printf("Input new treatment's duration: ");
+            System.out.printf("Input new treatment's duration [Minute]: ");
             duration= input.nextInt();
+            treatments.get(up-1).setDuration(duration);
         }while(duration<0 || duration > 600);
 
         do{
-            System.out.printf("Input new treatment's price: ");
+            System.out.printf("Input new treatment's price: Rp. ");
             price= input.nextInt();
             treatments.get(up-1).setPrice(price);
         }while(price<0);
 
         sort();
+
+        input.nextLine();
+        System.out.println("Treatment's detail updated!");
+        System.out.printf("Press enter to continue...");
+        input.nextLine();
     }
 
-    public static void remove()
+    public static void removeTreatment()
     {
         viewTreatment();
         System.out.printf("Input which treatments to remove[1 - %d]: ",(treatments.size()));
         int del = input.nextInt();
+        input.nextLine();
         System.out.printf("Are you sure to remove the treatment? [Yes | No]: ");
-        String ans = input.next();
+        String ans = input.nextLine();
         if(ans.equals("Yes"))
         {
             treatments.remove(del - 1);
             System.out.println("The treatment removed");
+            System.out.printf("Press enter to continue...");
+            input.nextLine();
         }
         else {
             System.out.println("Remove treatment canceled");
+            System.out.printf("Press enter to continue...");
+            input.nextLine();
             return;
         }
     }

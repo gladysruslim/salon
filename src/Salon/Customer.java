@@ -3,6 +3,8 @@ package Salon;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static Salon.Main.header;
+
 public class Customer {
     static Scanner input = new Scanner(System.in);
     static ArrayList<Customer> customers = new ArrayList<>();
@@ -85,7 +87,7 @@ public class Customer {
         int choose;
 
         do{
-            System.out.println("Chill Salon");
+            header();
             System.out.println("Customer Menu:");
             System.out.println("-----------------");
             System.out.println("1. Add New Customer");
@@ -98,7 +100,7 @@ public class Customer {
             input.nextLine();
             switch (choose) {
                 case 1:
-                    add();
+                    addCust();
                     break;
 
                 case 2:
@@ -106,11 +108,11 @@ public class Customer {
                     break;
 
                 case 3:
-                    update();
+                    updateCust();
                     break;
 
                 case 4:
-                    remove();
+                    removeCust();
                     break;
 
                 case 5:
@@ -119,7 +121,7 @@ public class Customer {
         }while(choose!= 5);
     }
 
-    public static void add()
+    public static void addCust()
     {
         if(customers.size() == 0)
         {
@@ -145,9 +147,11 @@ public class Customer {
             phone = input.nextLine();
         } while ((phone.length() < 11 || phone.length() > 13));
 
-        System.out.println("New customer added!");
-
         customers.add(new Customer(id, name, address, phone));
+
+        System.out.println("New customer added!");
+        System.out.printf("Press enter to continue...");
+        input.nextLine();
     }
 
     public static void viewCust()
@@ -160,10 +164,14 @@ public class Customer {
             customers.add(new Customer("0004", "Delvin Setiamin", "Poris Indah", "08126607314"));
         }
 
-        System.out.println("Jumlah customer: " + customers.size());
         if (customers.isEmpty()) {
             System.out.println("No data!");
+            System.out.printf("Press enter to continue...");
+            input.nextLine();
         } else {
+            header();
+            System.out.println("Jumlah customer: " + customers.size());
+            System.out.println("==================================================");
             for (int i = 0; i < customers.size(); i++) {
                 System.out.println("No. " + (i+1));
                 System.out.println("ID: " + customers.get(i).getId());
@@ -172,10 +180,13 @@ public class Customer {
                 System.out.println("Phone: " + customers.get(i).getPhone());
                 System.out.println();
             }
+            System.out.println("==================================================");
+            System.out.printf("Press enter to continue...");
+            input.nextLine();
         }
     }
 
-    public static void update()
+    public static void updateCust()
     {
         if (customers.isEmpty()) {
             System.out.println("No data!");
@@ -205,20 +216,25 @@ public class Customer {
             } while ((phone.length() < 11 || phone.length() > 13));
 
             System.out.println("The customer data updated");
+            System.out.printf("Press enter to continue...");
+            input.nextLine();
 
         }
     }
 
-    public static void remove()
+    public static void removeCust()
     {
         if (customers.isEmpty()) {
             System.out.println("No data!");
         } else {
+            viewCust();
             System.out.printf("Input which data to remove[1 - %d]: ",(customers.size()));
             int del = input.nextInt();
             customers.remove(del-1);
 
             System.out.println("The customer data removed");
+            System.out.printf("Press enter to continue...");
+            input.nextLine();
 
         }
     }

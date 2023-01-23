@@ -1,6 +1,5 @@
 package Salon;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import static Salon.Appointment.menuAppointment;
@@ -10,15 +9,21 @@ import static Salon.Treatment.menuTreatment;
 
 public class Main {
     static Scanner input = new Scanner(System.in);
-    static ArrayList<Customer> customers = new ArrayList<>();
-    static ArrayList<Appointment> appointments = new ArrayList<>();
+
+    public static void header()
+    {
+        System.out.println("\n" +
+                "█▀▀ █░█ █ █░░ █░░   █▀ ▄▀█ █░░ █▀█ █▄░█\n" +
+                "█▄▄ █▀█ █ █▄▄ █▄▄   ▄█ █▀█ █▄▄ █▄█ █░▀█");
+    }
 
     public static void main(String[] args) {
         int choose;
 
         do{
-            System.out.println("Chill Salon");
-            System.out.println("Open from 9.00 until 19.00");
+            System.out.println();
+            header();
+            System.out.println("Open from 9.00 until 19.00 WIB");
             System.out.println("-----------------");
             System.out.println("Category:");
             System.out.println("1. Customer Data");
@@ -31,6 +36,7 @@ public class Main {
             System.out.println("8. Exit");
             System.out.print("Choose : ");
             choose = input.nextInt();
+            System.out.println();
             switch (choose) {
                 case 1:
                     menuCustomer();
