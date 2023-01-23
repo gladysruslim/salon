@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 import static Salon.Appointment.menuAppointment;
 import static Salon.Customer.*;
+import static Salon.EquipmentData.MenuEquipment;
+import static Salon.StaffData.menuStaff;
+import static Salon.SuppliesData.MenuSupplies;
 import static Salon.Transactions.menuTransactions;
 import static Salon.Treatment.menuTreatment;
 
@@ -43,7 +46,7 @@ public class Main {
                     break;
 
                 case 2:
-                    //menuStaff();
+                    menuStaff();
                     break;
 
                 case 3:
@@ -59,11 +62,11 @@ public class Main {
                     break;
 
                 case 6:
-                    // menuEquipment();
+                    MenuEquipment();
                     break;
 
                 case 7:
-                    // menuSupplies();
+                    MenuSupplies();
                     break;
 
                 case 8:

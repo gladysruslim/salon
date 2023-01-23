@@ -1,6 +1,9 @@
 package Salon;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import static Salon.Main.header;
+
 public class EquipmentData {
     static ArrayList<EquipmentData> EquipmentDatas = new ArrayList<>();
     private String EquipmentName;
@@ -35,7 +38,7 @@ public class EquipmentData {
     public static void MenuEquipment()
     {
         int n;
-        System.out.println("Chill Salon");
+        header();
         System.out.println("Equipment Menu:");
         System.out.println("-----------------");
         System.out.println("1. Add New Equipment");
@@ -70,10 +73,10 @@ public class EquipmentData {
     }
 
 
-    public static void main(String[] args) {
-
-        MenuEquipment();
-    }
+//    public static void main(String[] args) {
+//
+//        MenuEquipment();
+//    }
 
     public static void AddEquipment()
     {

@@ -3,6 +3,8 @@ package Salon;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static Salon.Main.header;
+
 public class StaffData {
 
     static ArrayList<StaffData> StaffDatas = new ArrayList<>();
@@ -65,7 +67,7 @@ public class StaffData {
 
     public static void menuStaff(){
         int n;
-        System.out.println("Chill Salon");
+        header();
         System.out.println("Staff Menu:");
         System.out.println("-----------------");
         System.out.println("1. Add New Staff");
@@ -99,10 +101,10 @@ public class StaffData {
         menuStaff();
     }
 
-    public static void main(String[] args)
-    {
-        menuStaff();
-    }
+//    public static void main(String[] args)
+//    {
+//        menuStaff();
+//    }
 
 
     public static void AddStaff()
@@ -197,6 +199,7 @@ public class StaffData {
                 System.out.printf("%-5d %-20s %-10s %-20s %-15s %-5s %-7s\n", i+1, StaffDatas.get(i).getNameStaff(), StaffDatas.get(i).getIdStaff(), StaffDatas.get(i).getAddressStaff(), StaffDatas.get(i).getNoHpStaff(), StaffDatas.get(i).getAgeStaff(), StaffDatas.get(i).getGenderStaff());
             }
             System.out.print("======================================================================================================");
+            System.out.println();
             int U;
             do
             {
@@ -254,6 +257,7 @@ public class StaffData {
                 System.out.printf("%-5d %-20s %-10s %-20s %-15s %-5s %-7s\n", i+1, StaffDatas.get(i).getNameStaff(), StaffDatas.get(i).getIdStaff(), StaffDatas.get(i).getAddressStaff(), StaffDatas.get(i).getNoHpStaff(), StaffDatas.get(i).getAgeStaff(), StaffDatas.get(i).getGenderStaff());
             }
             System.out.print("======================================================================================================");
+            System.out.println();
             int R;
             do
             {
