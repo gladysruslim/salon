@@ -1,7 +1,6 @@
 package Salon;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 
 import static Salon.Customer.viewCust;
@@ -15,11 +14,20 @@ public class Appointment {
     static ArrayList<Appointment> done = new ArrayList<>();
     static Scanner input = new Scanner(System.in);
     private int time;
+    private String date;
     private int sum;
     private String trt;
     private String cust;
     private int price;
     private int totalPrice;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public int getPrice() {
         return price;
@@ -71,10 +79,11 @@ public class Appointment {
     }
 
 
-    public Appointment(String cust, String trt, int time, int sum, int price, int totalPrice)
+    public Appointment(String cust, String trt, String date, int time, int sum, int price, int totalPrice)
     {
         this.setCust(cust);
         this.setTrt(trt);
+        this.setDate(date);
         this.setTime(time);
         this.setSum(sum);
         this.setPrice(price);
@@ -129,6 +138,7 @@ public class Appointment {
         int sum = 0;
         int price;
         int totalPrice = 0;
+        String date;
 
         if(sum + 60 >= 600)
         {
@@ -149,10 +159,16 @@ public class Appointment {
                     choose = input.nextInt();
                     //   appointments.get(choose-1).setTreatment(treatments.get(choose-1));
                 }while(choose<0 || choose>treatments.size());
+                input.nextLine();
 
                 sum += treatments.get(choose-1).getDuration();
                 price= treatments.get(choose-1).getPrice();
                 totalPrice+=price;
+
+                do{
+                    System.out.printf("Masukkan tanggal transaksi [dd-mm-yyyy]: ");
+                    date = input.nextLine();
+                }while(date.length()!=10);
 
                 do{
                     System.out.printf("Choose time to make appointment [9 - 19] WIB: ");
@@ -160,7 +176,7 @@ public class Appointment {
                 }while(time < 9 || time > 19 );
 
 
-                appointments.add(new Appointment(customers.get(cust-1).getName(), treatments.get(choose-1).getName(), time, sum, price, totalPrice));
+                appointments.add(new Appointment(customers.get(cust-1).getName(), treatments.get(choose-1).getName(), date, time, sum, price, totalPrice));
                 input.nextLine();
                 System.out.println("New appointments added!");
                 System.out.printf("Press enter to continue...");
@@ -189,13 +205,16 @@ public class Appointment {
             header();
             System.out.println("Appointment List");
             System.out.println("Jumlah appointment: " + appointments.size());
-            System.out.println("==================================================================");
+            System.out.println("==============================================================================");
+            System.out.printf("| %-2s | %-20s | %-20s | %-10s | %-9s |", "No.", "Name", "Treatment[1]", "Date", "Time");
+            System.out.println();
+            System.out.println("==============================================================================");
             for (int i=0; i< appointments.size(); i++)
             {
-                System.out.printf(" | %-2d. | %-20s | %-20s | %d.00 WIB |", (i+1), appointments.get(i).getCust(),appointments.get(i).getTrt(), appointments.get(i).getTime());
+                System.out.printf("| %-2d. | %-20s | %-20s | %-10s | %d.00 WIB |", (i+1), appointments.get(i).getCust(), appointments.get(i).getTrt(), appointments.get(i).getDate(), appointments.get(i).getTime());
                 System.out.println("");
             }
-            System.out.println("==================================================================");
+            System.out.println("==============================================================================");
             System.out.printf("Press enter to continue...");
             input.nextLine();
         }

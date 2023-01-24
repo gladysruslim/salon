@@ -72,12 +72,6 @@ public class EquipmentData {
         MenuEquipment();
     }
 
-
-//    public static void main(String[] args) {
-//
-//        MenuEquipment();
-//    }
-
     public static void AddEquipment()
     {
         EquipmentDatas.add(new EquipmentData());

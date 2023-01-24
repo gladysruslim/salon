@@ -124,7 +124,7 @@ public class Treatment {
             do{
                 System.out.printf("Input new treatment's name: ");
                 name= input.nextLine();
-            }while(name.length() > 50 );
+            }while(name.length() > 50);
 
             do{
                 System.out.printf("Input new treatment's type: ");

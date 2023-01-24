@@ -5,16 +5,11 @@ import java.util.Scanner;
 
 import static Salon.Main.header;
 import static Salon.Transactions.jumlahtr;
-import static Salon.Transactions.transactions;
 
 public class Customer {
     static Scanner input = new Scanner(System.in);
     static ArrayList<Customer> customers = new ArrayList<>();
-    public String id;
-    public String name;
-    public String address;
-    public String phone;
-    public String status;
+    private String id, name, address, phone, status;
     public int point;
 
     public String getId() {
@@ -76,12 +71,6 @@ public class Customer {
         this.setPhone(phone);
         this.setStatus(status);
         this.setPoint(point);
-    }
-
-    static void cls() {
-        for (int i = 0; i < 25; i++) {
-            System.out.println();
-        }
     }
 
     public static void menuCustomer()
@@ -156,7 +145,7 @@ public class Customer {
         customers.add(new Customer(id, name, address, phone, status, point));
 
         System.out.println("New customer added!");
-        System.out.printf("Press enter to continue...");
+        System.out.println("Press enter to continue...");
         input.nextLine();
     }
 
@@ -172,8 +161,6 @@ public class Customer {
 
         if (customers.isEmpty()) {
             System.out.println("No data!");
-            System.out.printf("Press enter to continue...");
-            input.nextLine();
         } else {
             header();
             System.out.println("Jumlah customer: " + customers.size());
@@ -186,9 +173,9 @@ public class Customer {
                 System.out.println();
             }
             System.out.println("================================================================================================================");
-            System.out.printf("Press enter to continue...");
-            input.nextLine();
         }
+        System.out.println("Press enter to continue...");
+        input.nextLine();
     }
 
     public static void updateCust()
@@ -221,7 +208,7 @@ public class Customer {
             } while ((phone.length() < 11 || phone.length() > 13));
 
             System.out.println("The customer data updated");
-            System.out.printf("Press enter to continue...");
+            System.out.println("Press enter to continue...");
             input.nextLine();
 
         }
@@ -238,7 +225,7 @@ public class Customer {
             customers.remove(del-1);
 
             System.out.println("The customer data removed");
-            System.out.printf("Press enter to continue...");
+            System.out.println("Press enter to continue...");
             input.nextLine();
         }
     }

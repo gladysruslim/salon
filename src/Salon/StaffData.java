@@ -101,12 +101,6 @@ public class StaffData {
         menuStaff();
     }
 
-//    public static void main(String[] args)
-//    {
-//        menuStaff();
-//    }
-
-
     public static void AddStaff()
     {
         StaffDatas.add(new StaffData());

@@ -73,12 +73,6 @@ public class SuppliesData {
         MenuSupplies();
     }
 
-
-//    public static void main(String[] args) {
-//
-//        MenuSupplies();
-//    }
-
     public static void AddSupplies()
     {
         SuppliesDatas.add(new SuppliesData());

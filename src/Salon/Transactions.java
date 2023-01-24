@@ -3,7 +3,6 @@ package Salon;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static Salon.Appointment.appointments;
 import static Salon.Customer.*;
 import static Salon.Main.header;
 import static Salon.Treatment.treatments;
@@ -223,16 +222,20 @@ public class Transactions {
 
     public static void viewBill()
     {
+        header();
+        System.out.println("--------------------------------------------------");
+        System.out.printf("| Nama Customer: %31s |", transactions.get(transactions.size()-1).getCust());
         System.out.println();
-        System.out.println("Nama: " + transactions.get(transactions.size()-1).getCust());
-        System.out.printf("Waktu: %d.00 WIB" , transactions.get(transactions.size()-1).getTime());
+        System.out.printf("| Waktu: %32d%s |" , transactions.get(transactions.size()-1).getTime(), ".00 WIB");
         System.out.println();
         for (int j = 0; j < jumlahtr ; j++) {
-                System.out.printf("| %-20s | Rp. %-15d |", tr[j], harga[j]);
+                System.out.printf("| %-33s  Rp. %7d |", tr[j], harga[j]);
                 System.out.println();
             }
-            System.out.println("Total: Rp. " + transactions.get(transactions.size()-1).getTotal());
+             System.out.println("|------------------------------------------------|");
+            System.out.printf("| Total: %31s %d |", "Rp.", transactions.get(transactions.size()-1).getTotal());
             System.out.println();
+            System.out.println("--------------------------------------------------");
     }
 
 
@@ -246,6 +249,10 @@ public class Transactions {
         }
         else {
             header();
+            int jumlahTotal=0;
+            for (int i = 0; i < transactions.size(); i++) {
+                jumlahTotal+=transactions.get(i).getTotal();
+            }
             System.out.println("Transactions List");
             System.out.println("Jumlah transactions: " + transactions.size());
             System.out.println("=============================================");
@@ -257,6 +264,8 @@ public class Transactions {
                 System.out.println("");
             }
             System.out.println("=============================================");
+            System.out.printf("Total income: %d", jumlahTotal);
+            System.out.println();
             System.out.printf("Press enter to continue...");
             input.nextLine();
         }
@@ -351,7 +360,5 @@ public class Transactions {
                 input.nextLine();
             }
         }
-
     }
-
 }
